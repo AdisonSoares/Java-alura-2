@@ -1,15 +1,15 @@
 package Projeto_GerenciadorDeCursos.br.com.alura;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Curso {
+    private  String instrutor;
     private String nome;
 
-    private String instrutor;
 
     private List<Aula> aulas = new ArrayList<Aula>();
+    private Set<Aluno> alunos = new HashSet<>();
+    private Map<Integer, Aluno> matriculaParaAluno = new HashMap<>();
 
     public Curso(String nome, String instrutor) {
         this.nome = nome;
@@ -26,6 +26,10 @@ public class Curso {
         return instrutor;
     }
 
+    public Set<Aluno> getAlunos() {
+        return Collections.unmodifiableSet(alunos);
+    }
+
     public void adiciona(Aula aula){
         this.aulas.add(aula);
     }
@@ -39,5 +43,20 @@ public class Curso {
         return "{Curso:"+this.nome+", "+
                 "Tempo total: "+this.getTempoTotal()+" minutos, }"+
                 "Aulas: "+this.aulas+"}";
+    }
+
+    public void matricula(Aluno aluno) {
+        this.alunos.add(aluno);
+        this.matriculaParaAluno.put(aluno.getMatricula(), aluno);
+    }
+
+    public boolean estaMatriculado(Aluno aluno) {
+        return this.alunos.contains(aluno);
+    }
+
+    public Aluno buscaMatriculado(int matricula) throws NoSuchFieldException {
+        if(!matriculaParaAluno.containsKey(matricula))
+            throw new NoSuchFieldException();
+        return matriculaParaAluno.get(matricula);
     }
 }
