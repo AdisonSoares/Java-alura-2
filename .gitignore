@@ -6,3 +6,6 @@ Java_8.iml
 *.iml
 *.idea/
 ArquviosExternos/
+/.project
+/.settings/
+
